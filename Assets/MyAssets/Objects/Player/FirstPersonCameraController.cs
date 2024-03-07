@@ -11,8 +11,8 @@ public class FirstPersonCameraController : MonoBehaviour {
 	public Transform target_point;
 
 	[SerializeField]
-	[Range(0.05f, 2.5f)]
-	private float mouse_sensitivity = 1.0f;
+	[Range(0.05f, 5f)]
+	private float mouse_sensitivity = 2.0f;
 	[SerializeField]
 	[Range(45f, 100f)]
 	private float y_rotation_limit = 80f;
@@ -28,15 +28,7 @@ public class FirstPersonCameraController : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	void Start() {
-	}
-
-	void Update() {
-		var cur_rot = get_current_rotation();
-		move_camera(cur_rot);
-	}
-
-	void move_camera(FPSCurrentRotation cur_rotation) {
+	public void move_camera(FPSCurrentRotation cur_rotation) {
 		scene_camera.transform.position = target_point.position;
 
 		scene_camera.transform.localRotation = cur_rotation.get_only_y_rotation();
@@ -52,13 +44,13 @@ public class FirstPersonCameraController : MonoBehaviour {
 	}
 
 	public void set_mouse_sensitivity(float new_sensitivity) {
-		mouse_sensitivity = Mathf.Clamp(new_sensitivity, 0.05f, 2.5f);
+		mouse_sensitivity = Mathf.Clamp(new_sensitivity, 0.05f, 5f);
 	}
 	public float get_mouse_sensitivity() {
 		return mouse_sensitivity;
 	}
 
-	FPSCurrentRotation get_current_rotation() {
+	public FPSCurrentRotation get_current_rotation() {
 		Vector2 axes_movement = new Vector2(
 				Input.GetAxis(xAxis),
 				Input.GetAxis(yAxis)
