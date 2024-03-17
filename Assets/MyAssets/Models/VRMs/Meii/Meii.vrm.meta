@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: 04d5cd8618e66ea4c96f4a2cc999395b
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: aa
+    second: {fileID: 11400000, guid: 4265ba57661901047be707cca07d0b20, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: angry
+    second: {fileID: 11400000, guid: 40c47c45ae762c4499953e316beff028, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: blink
+    second: {fileID: 11400000, guid: 3193c5e6d3e296d4dbeb40f1d45010ec, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: blinkLeft
+    second: {fileID: 11400000, guid: d20ca30a82fd4c245b4df7c94db260b2, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: blinkRight
+    second: {fileID: 11400000, guid: 7600a7645a43a444488314d968d9fbaf, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: ee
+    second: {fileID: 11400000, guid: 96083827e8a45e54ebbac20387eac8f6, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: happy
+    second: {fileID: 11400000, guid: f46536dd09bd1b441a304ca5932d22a5, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: ih
+    second: {fileID: 11400000, guid: c8a86487997f03b48aafa306e84c9b60, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookDown
+    second: {fileID: 11400000, guid: 2a8c2e3a5d775134e990387d12109699, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookLeft
+    second: {fileID: 11400000, guid: 97054356ef8652941a1a644701953759, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookRight
+    second: {fileID: 11400000, guid: f773e89d944097c4aad7932331834d23, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookUp
+    second: {fileID: 11400000, guid: db69ec84f89ead34189400ef9b2e4318, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: neutral
+    second: {fileID: 11400000, guid: c33a2476d77b8454d974361b54a6b0ee, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: oh
+    second: {fileID: 11400000, guid: b2d6b4574cfe6424b821b581c6f36766, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: ou
+    second: {fileID: 11400000, guid: 1f8b6283a1f85ff45823d08bb9d24313, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: relaxed
+    second: {fileID: 11400000, guid: 26ccf5fc24c3285419d2192dd41c2c08, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: sad
+    second: {fileID: 11400000, guid: 1c79ff014a620054e9eca54097346648, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: surprised
+    second: {fileID: 11400000, guid: 0256f73efc2651546a1990bca87e62aa, type: 2}
+  - first:
+      type: UniVRM10:VRM10Object
+      assembly: VRM10
+      name: _vrm1_
+    second: {fileID: 11400000, guid: 220d590bc0661aa4c96034bbc4ef84f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Accessory_GlassesLowLens_01_MATCAP (Instance)
+    second: {fileID: 2100000, guid: 658eb5d0d059963498c71ee8d9ed2673, type: 2}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: f66ead3390398f443aa127b741826ad9, type: 3}
+  MigrateToVrm1: 0
+  RenderPipeline: 1

@@ -1,0 +1,107 @@
+fileFormatVersion: 2
+guid: 6c295fbd7d3c8c94bb213a5c9013f9bc
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: aa
+    second: {fileID: 11400000, guid: f9c8bba6d48b22f4088c09f210cd3733, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: angry
+    second: {fileID: 11400000, guid: 32335f6d1239c1845b2e8cfc83396db3, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: blink
+    second: {fileID: 11400000, guid: 6c3fa9bd2565ae84f879ed943edb0fd1, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: blinkLeft
+    second: {fileID: 11400000, guid: 96e214436805b7e40971a8230df74527, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: blinkRight
+    second: {fileID: 11400000, guid: 66fb095e37981fc4ab6cdb9e6f1fcafc, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: ee
+    second: {fileID: 11400000, guid: c7057d338cbdcd240ba9d154f735d54b, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: happy
+    second: {fileID: 11400000, guid: 7ae3db909a5718f448e571a24727eab8, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: ih
+    second: {fileID: 11400000, guid: c4d85e913e48b0748ba0387b6ec270e2, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookDown
+    second: {fileID: 11400000, guid: cbeac2a7e76ffa74c8d5e7f6ec19bac3, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookLeft
+    second: {fileID: 11400000, guid: b580865b1b98744458cf89086d4d05f8, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookRight
+    second: {fileID: 11400000, guid: b14b961b7a5aca34b8dc2e4c9e40f953, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: lookUp
+    second: {fileID: 11400000, guid: 8953d1c0f7a9be949b440a974cf1efc8, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: neutral
+    second: {fileID: 11400000, guid: 6add44c7d640a8c47916c3f0cdb3ece7, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: oh
+    second: {fileID: 11400000, guid: d3f6991c46f97c74db9b361bbb0c5977, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: ou
+    second: {fileID: 11400000, guid: 345ee2a9dcb321c4b97561102876dd03, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: relaxed
+    second: {fileID: 11400000, guid: 3c4300fb63e393743959286bc31bb9bd, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: sad
+    second: {fileID: 11400000, guid: 65c1227cb66708f47b113784ed98ba88, type: 2}
+  - first:
+      type: UniVRM10:VRM10Expression
+      assembly: VRM10
+      name: surprised
+    second: {fileID: 11400000, guid: 485ec3719ddd18e4c912d00e450c3aac, type: 2}
+  - first:
+      type: UniVRM10:VRM10Object
+      assembly: VRM10
+      name: _vrm1_
+    second: {fileID: 11400000, guid: ed8012145a5f6a146b975973acf20251, type: 2}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: f66ead3390398f443aa127b741826ad9, type: 3}
+  MigrateToVrm1: 0
+  RenderPipeline: 0
