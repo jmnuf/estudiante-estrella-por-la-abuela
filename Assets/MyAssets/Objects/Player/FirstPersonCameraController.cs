@@ -7,17 +7,18 @@ public class FirstPersonCameraController : MonoBehaviour {
 
 	private Vector2 rotation;
 
-	public GameObject scene_camera;
-	public Transform target_point;
+	public GameObject object_to_apply_y_rotation;
+	public GameObject object_to_apply_x_rotation;
+	public Transform reference_point;
 
 	[SerializeField]
 	[Range(0.05f, 5f)]
 	private float mouse_sensitivity = 2.0f;
 	[SerializeField]
-	[Range(45f, 100f)]
+	[Range(35f, 100f)]
 	private float y_rotation_limit = 80f;
 	[SerializeField]
-	[Range(45f, 180f)]
+	[Range(35f, 180f)]
 	private float x_rotation_limit = 90f;
 	
 	const string xAxis = "Mouse X";
@@ -28,11 +29,17 @@ public class FirstPersonCameraController : MonoBehaviour {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	public void move_camera(FPSCurrentRotation cur_rotation) {
-		scene_camera.transform.position = target_point.position;
+	public void move_objects(FPSCurrentRotation cur_rotation) {
+		if (object_to_apply_y_rotation != object_to_apply_x_rotation) {
+			object_to_apply_y_rotation.transform.localRotation = cur_rotation.get_only_y_rotation();
+			object_to_apply_x_rotation.transform.localRotation = cur_rotation.get_only_x_rotation();
 
-		scene_camera.transform.localRotation = cur_rotation.get_only_y_rotation();
-		transform.localRotation = cur_rotation.get_only_x_rotation();
+			if (reference_point != null) object_to_apply_y_rotation.transform.position = reference_point.position;
+		} else {
+			GameObject obj = object_to_apply_x_rotation;
+			obj.transform.localRotation = cur_rotation.get_full_rotation();
+			if (reference_point != null) obj.transform.position = reference_point.position;
+		}
 	}
 
 	void toggle_lock() {

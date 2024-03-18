@@ -15,7 +15,7 @@ public abstract class Interactor : MonoBehaviour {
 
 	protected Interactable check_for_interactions(FPSCurrentRotation cur_rotation) {
 		Vector3 ray_position = ray_ref_object.position;
-		ray_ref_object.localRotation = cur_rotation.get_only_y_rotation();
+		if (cur_rotation != null) ray_ref_object.localRotation = cur_rotation.get_only_y_rotation();
 
 		Vector3 ray_direction = ray_ref_object.forward;
 		Debug.DrawRay(ray_position, ray_direction * ray_distance, Color.red);
