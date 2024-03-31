@@ -8,7 +8,6 @@ public class BabelPage : ScriptableObject {
 	private BabelPagePiece[] page_pieces;
 	public BabelPageContent translations = new BabelPageContent();
 
-
 	private void OnValidate() {
 		translations = new BabelPageContent();
 		foreach (var piece in page_pieces) {
@@ -18,6 +17,11 @@ public class BabelPage : ScriptableObject {
 
 	public string this[BabelLanguage language] {
 		get { return translations[language]; }
+	}
+
+	public string current_translation() {
+		var current_language = BabelStone.get_current_language();
+		return translations[current_language];
 	}
 }
 
