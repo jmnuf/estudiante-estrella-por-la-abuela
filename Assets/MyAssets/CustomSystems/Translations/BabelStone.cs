@@ -6,7 +6,9 @@ using TMPro;
 
 public class BabelStone : MonoBehaviour {
 	private static BabelLanguage current_language;
-	private static List<BabelStone> worldWides = new List<BabelStone>();
+	private static List<BabelStone> stones = new List<BabelStone>();
+	public delegate void BabelCurrentLanguageChanged();
+	public static BabelCurrentLanguageChanged on_current_language_changed;
 
 	public BabelPage translator;
 	public TMP_Text text_label;
@@ -17,7 +19,7 @@ public class BabelStone : MonoBehaviour {
 			text_label = GetComponent<TMP_Text>();
 		}
 		Assert.IsNotNull(text_label, "A Text Mesh Pro text label component is required to operate");
-		worldWides.Add(this);
+		stones.Add(this);
 	}
 
 	private void Awake() {
@@ -25,7 +27,7 @@ public class BabelStone : MonoBehaviour {
 	}
 
 	private void OnDestroy() {
-		worldWides.Remove(this);
+		stones.Remove(this);
 	}
 
 	public void load_language_translation() {
@@ -38,9 +40,10 @@ public class BabelStone : MonoBehaviour {
 	}
 	public static void set_current_language(BabelLanguage new_language) {
 		current_language = new_language;
-		foreach(var mr in worldWides) {
+		foreach(var mr in stones) {
 			mr.load_language_translation();
 		}
+		on_current_language_changed();
 	}
 
 	public static BabelLanguage get_language_from_system(BabelLanguage default_language) {
