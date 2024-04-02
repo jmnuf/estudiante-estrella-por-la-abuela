@@ -12,6 +12,7 @@ public class UITextPanel : MonoBehaviour {
 		get => _text_page;
 		set {
 			_text_page = value;
+			if (!tmpro_text) return;
 			if (value) {
 				tmpro_text.text = _text_page.current_translation();
 			} else {
@@ -38,7 +39,7 @@ public class UITextPanel : MonoBehaviour {
 	}
 
 	private void on_babel_current_language_changed() {
-			if (_text_page != null) {
+			if (_text_page != null && tmpro_text != null) {
 				tmpro_text.text = _text_page.current_translation();
 			}
 	}
