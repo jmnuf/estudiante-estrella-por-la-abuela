@@ -130,6 +130,9 @@ public class CategoryQuestion {
 	[SerializeField]
 	private bool is_case_sensitive = false;
 
+	public BabelPage get_question_page() => question_page;
+	public BabelPage get_correct_answer_page() => correct_answer_page;
+
 	public string get_question() {
 		return question_page.current_translation();
 	}
@@ -151,4 +154,5 @@ public class CategoryQuestion {
 		}
 		return given_answer.Equals(expected_answer, comparison_type);
 	}
+
 }

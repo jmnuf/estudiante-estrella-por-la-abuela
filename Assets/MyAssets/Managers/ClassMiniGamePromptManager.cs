@@ -9,41 +9,149 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 	private UITextPanel question_prompt_panel;
 	[SerializeField]
 	private UITextPanel class_done_panel;
-	public ClassData data;
-	private List<int> text_prompts_indexes = new List<int>();
-	private List<int> questions_prompts_indexes = new List<int>();
+	private ClassData _class_data;
+	public ClassData data {
+		set {
+			_class_data = value;
+			if (value == null) { return; }
+			copy_prompts_tracker = new CategoryPointsTracker(
+				_class_data.get_random_text_prompt,
+				_class_data.get_text_prompts_count
+			);
+			question_prompts_tracker = new CategoryPointsTracker(
+				_class_data.get_random_question_prompt,
+				_class_data.get_questions_count
+			);
+		}
+		get => _class_data;
+	}
+	private CategoryPointsTracker copy_prompts_tracker;
+	private CategoryPointsTracker question_prompts_tracker;
+
+	private List<ClassDataLevelPoint> class_points = new List<ClassDataLevelPoint>();
 
 	private bool capturing_key_inputs;
 	private UserTypingToTextTracker user_typing;
 
-	private int class_point = 0;
+	private int class_point_index = 0;
+	private int active_class_point_index = 0;
+	public int completed_class_points { get; private set; }
+
+	public bool is_category_done {
+		get {
+			if (data == null) {
+				return false;
+			}
+			if (class_point_index < data.get_level_points()) {
+				return false;
+			}
+			return true;
+		}
+	}
+
+	public delegate void EventFinishedPoint(int point_index, bool finished_correctly);
+	public event EventFinishedPoint finished_point;
 
 	public void increase_class_point() {
-		class_point += 1;
-		bool can_request_question = class_point >= data.get_points_till_questions_appear();
-		if (!can_request_question) {
-			load_text_prompt();
+		if (is_category_done) {
 			return;
 		}
-		var (index, point) = data.get_random_point(0.6f);
+		class_point_index += 1;
+		bool can_request_question = class_point_index >= data.get_points_till_questions_appear();
+		ClassDataLevelPoint point;
+		if (!can_request_question) {
+			point = get_random_point_try_non_repeating(copy_prompts_tracker);
+			load_text_prompt();
+			class_points.Add(point);
+			return;
+		}
+		int index;
+		(index, point) = data.get_random_point(0.6f);
+		point = point.match(
+				_ => {
+					if (!copy_prompts_tracker.used_indexes.Contains(index)) {
+						return point;
+					}
+					return get_random_point_try_non_repeating(copy_prompts_tracker);
+				},
+				_ => {
+					if (!question_prompts_tracker.used_indexes.Contains(index)) {
+						return point;
+					}
+					return get_random_point_try_non_repeating(question_prompts_tracker);
+				}
+		);
+		load_point_prompt(point);
+		class_points.Add(point);
+	}
+
+	private ClassDataLevelPoint get_random_point_try_non_repeating(CategoryPointsTracker tracker) {
+		const int MAX_TRIES = 1000;
+		int tries = 0;
+		int index;
+		int points_count = tracker.points_count;
+		if (points_count < 1) {
+			throw new System.IndexOutOfRangeException("Category points is empty and tried to access index 0");
+		}
+		if (points_count == 1) {
+			return tracker.rand_point().Item2;
+		}
+		ClassDataLevelPoint point;
+		var used_indexes = tracker.used_indexes;
+		if (used_indexes.Count >= points_count) {
+			used_indexes.Clear();
+		}
+		(index, point) = tracker.rand_point();
+		while(used_indexes.Contains(index) && tries < MAX_TRIES) {
+			(index, point) = tracker.rand_point();
+			tries += 1;
+		}
+		tracker.add_index(index);
+		return point;
 	}
 
 	public void load_text_prompt() {
-		int index;
-		ClassDataLevelPoint point;
-		(index, point) = data.get_random_text_prompt();
-		while (text_prompts_indexes.Contains(index)) {
-			(index, point) = data.get_random_text_prompt();
-		}
-		text_prompts_indexes.Add(index);
+		var point = get_random_point_try_non_repeating(copy_prompts_tracker);
+		load_point_prompt(point);
+	}
+	public void load_question_prompt() {
+		var point = get_random_point_try_non_repeating(question_prompts_tracker);
+		load_point_prompt(point);
+	}
+
+	private void load_point_prompt(ClassDataLevelPoint point) {
 		point.match(
 			page => {
-				string translation = page.current_translation();
 				text_prompt_panel.text_page = page;
+				string translation = page.current_translation();
 				user_typing = UserTypingToTextTracker.Create(translation);
 			},
-			_question => {
-				throw new System.InvalidProgramException("Unreachable");
+			question => {
+				question_prompt_panel.text_page = question.get_question_page();
+			}
+		);
+	}
+
+	public void hide_panels() {
+		text_prompt_panel.hide();
+		question_prompt_panel.hide();
+	}
+
+	public void show_active_point_panel() {
+		hide_panels();
+		if (class_points.Count == 0) {
+			return;
+		}
+		active_class_point_index = class_point_index;
+		var active_point = class_points[class_points.Count - 1];
+		active_point.match(
+			_ => {
+				text_prompt_panel.show();
+				capturing_key_inputs = true;
+			},
+			_ => {
+				question_prompt_panel.show();
+				capturing_key_inputs = false;
 			}
 		);
 	}
@@ -60,8 +168,37 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 			return;
 		}
 
+		completed_class_points += 1;
+		finished_point?.Invoke(active_class_point_index, true);
 		//flag_active_note_copied();
 		//close_notebook();
+	}
+}
+
+class CategoryPointsTracker {
+	public delegate (int, ClassDataLevelPoint) GetNewDataLevelPoint();
+	public delegate int GetPointsCount();
+	public List<int> used_indexes { private set; get; } = new List<int>() ;
+	GetNewDataLevelPoint points_getter;
+	GetPointsCount points_count_getter;
+
+	public CategoryPointsTracker(GetNewDataLevelPoint category_points_getter, GetPointsCount category_points_count_getter) {
+		points_getter = category_points_getter;
+		points_count_getter = category_points_count_getter;
+	}
+
+	public (int, ClassDataLevelPoint) rand_point() {
+		return points_getter();
+	}
+	public int points_count {
+		get => points_count_getter();
+	}
+
+	public void add_index(int index) {
+		if (used_indexes.Contains(index)) {
+			return;
+		}
+		used_indexes.Add(index);
 	}
 }
 

@@ -10,6 +10,18 @@ public struct Option<T> {
 	public delegate ReturnType OptionSomeMatchFn<ReturnType>(T val);
 	public delegate ReturnType OptionNoneMatchFn<ReturnType>();
 
+	public void match(Action<T> on_some, Action on_none) {
+		switch (type) {
+			case OptionType.Some:
+				on_some(inner_value);
+				return;
+			case OptionType.None:
+				on_none();
+				return;
+			default:
+				throw new InvalidOperationException();
+		}
+	}
 	public R match<R>(OptionSomeMatchFn<R> on_some, OptionNoneMatchFn<R> on_none) => type switch {
 			OptionType.Some => on_some(inner_value),
 			OptionType.None => on_none(),
