@@ -4,6 +4,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(ClassMiniGamePromptManager))]
 public class ClassManager : MonoBehaviour {
+	public TestTeacher teacher;
+	public TestNotebook notebook;
+	public PlayerObject player;
+
 	public ClassMiniGamePromptManager mini_game_prompt_manager { get; private set; }
 	public ClassData[] classes;
 	private int active_class_index = 0;

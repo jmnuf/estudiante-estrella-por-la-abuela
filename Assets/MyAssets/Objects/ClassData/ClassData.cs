@@ -10,6 +10,10 @@ public class ClassData : ScriptableObject {
 	private BabelPage[] text_prompts_pages;
 	[SerializeField]
 	private CategoryQuestion[] question_prompts;
+	[SerializeField]
+	private int level_points;
+	[SerializeField]
+	private int points_till_questions_appear;
 
 	public string[] text_prompts {
 		get {
@@ -19,20 +23,86 @@ public class ClassData : ScriptableObject {
 		}
 	}
 
-	public int get_text_prompts_count() {
-		return text_prompts_pages.Length;
+	public (int, ClassDataLevelPoint) get_random_point(float chances_for_question) {
+		bool is_question = Random.value >= chances_for_question;
+		if (!is_question || question_prompts.Length == 0) {
+			return get_random_text_prompt();
+		}
+		return get_random_question_prompt();
 	}
 
-	public string get_text_prompt(int index) {
-		return text_prompts_pages[index].current_translation();
+	public (int, ClassDataLevelPoint) get_random_question_prompt() {
+		int index = 0;
+		if (question_prompts.Length > 1) {
+			index = Random.Range(0, question_prompts.Length);
+		}
+		var question = question_prompt(index);
+		var point = ClassDataLevelPoint.from_question(question);
+		return (index, point);
 	}
 
-	public int get_questions_count() {
-		return question_prompts.Length;
+	public (int, ClassDataLevelPoint) get_random_text_prompt() {
+		int index = 0;
+		if (text_prompts_pages.Length > 1) {
+			index = Random.Range(0, text_prompts_pages.Length);
+		}
+		var page = page_prompt(index);
+		var point = ClassDataLevelPoint.from_page(page);
+		return (index, point);
 	}
 
-	public CategoryQuestion get_question_prompt(int index) {
-		return question_prompts[index];
+	public int get_level_points() => level_points;
+
+	public int get_points_till_questions_appear() => points_till_questions_appear;
+
+	public int get_text_prompts_count() => text_prompts_pages.Length;
+
+	public string get_text_prompt(int index) => text_prompts_pages[index].current_translation();
+	public BabelPage page_prompt(int index) => text_prompts_pages[index];
+
+	public int get_questions_count() => question_prompts.Length;
+
+	public CategoryQuestion question_prompt(int index) => question_prompts[index];
+}
+
+public struct ClassDataLevelPoint {
+	public delegate R MatchPageLevelPoint<R>(BabelPage page);
+	public delegate R MatchQuestionLevelPoint<R>(CategoryQuestion question);
+	public static ClassDataLevelPoint from_page(BabelPage page) {
+		var level_point = new ClassDataLevelPoint();
+		level_point.text_page = page;
+		level_point.question = null;
+		return level_point;
+	}
+	public static ClassDataLevelPoint from_question(CategoryQuestion question) {
+		var level_point = new ClassDataLevelPoint();
+		level_point.text_page = null;
+		level_point.question = question;
+		return level_point;
+	}
+
+	private BabelPage text_page;
+	private CategoryQuestion question;
+	
+	public R match<R>(MatchPageLevelPoint<R> match_page, MatchQuestionLevelPoint<R> match_question) {
+		if (text_page != null) {
+			return match_page(text_page);
+		}
+		if (question != null) {
+			return match_question(question);
+		}
+		throw new System.InvalidOperationException("Unreachable");
+	}
+	public void match(System.Action<BabelPage> match_page, System.Action<CategoryQuestion> match_question) {
+		if (text_page != null) {
+			match_page(text_page);
+			return;
+		}
+		if (question != null) {
+			match_question(question);
+			return;
+		}
+		throw new System.InvalidOperationException("Unreachable");
 	}
 }
 
