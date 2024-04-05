@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", order = 1)]
+[CreateAssetMenu(fileName = "babel_page", order = 1)]
 public class BabelPage : ScriptableObject {
 	[SerializeField]
 	private BabelPagePiece[] page_pieces;

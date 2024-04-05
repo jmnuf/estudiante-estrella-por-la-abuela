@@ -15,7 +15,7 @@ public class ClassCategoryFinished: UnityEngine.Events.UnityEvent<ClassData, int
 public class ClassManager : MonoBehaviour {
 	public static ClassManager instance { get; private set; }
 	public TeacherInteractable teacher;
-	public TestNotebook notebook;
+	public NotebookInteractable notebook;
 	public PlayerObject player;
 
 	[SerializeField]

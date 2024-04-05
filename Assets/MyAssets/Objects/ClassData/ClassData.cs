@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "class_data", order = 2)]
 [System.Serializable]
 public class ClassData : ScriptableObject {
 	[SerializeField]

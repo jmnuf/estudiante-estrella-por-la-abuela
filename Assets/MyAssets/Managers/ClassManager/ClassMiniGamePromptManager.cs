@@ -42,12 +42,12 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 	public bool is_category_done {
 		get {
 			if (data == null) {
-				return false;
+				return true;
 			}
-			if (class_point_index < data.get_level_points()) {
-				return false;
+			if (class_point_index >= data.get_level_points()) {
+				return true;
 			}
-			return true;
+			return false;
 		}
 	}
 

@@ -17,7 +17,7 @@ public class TestNotebook : Interactable {
 	}
 
 	public override bool can_interact(Interactor interactor) {
-		var player_obj = interactor.gameObject.GetComponent<PlayerObject>();
+		var player_obj = interactor.GetComponent<PlayerObject>();
 		return player_obj != null;
 	}
 

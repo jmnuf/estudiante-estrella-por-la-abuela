@@ -4,8 +4,29 @@ using UnityEngine;
 using TMPro;
 
 public class PlayerInteractor : Interactor {
-	// [RequireComponent(typeof(TextMeshProUGUI))]
+	public static char interaction_key_char = 'e';
+	public static string interaction_key_str {
+		get => $"{interaction_key_char}";
+	}
 	public GameObject interaction_text_label;
+	public BabelPage babel_base_interaction;
+
+	// For DEBUG usage
+	// Comment out for build
+	private void Update() {
+		if (Input.GetKeyDown(KeyCode.L)) {
+			BabelLanguage cur_lang = BabelStone.get_current_language();
+			var all_langs = (BabelLanguage[]) System.Enum.GetValues(typeof(BabelLanguage));
+			int cur_lang_int = (int) cur_lang;
+			if (cur_lang_int + 1 >= all_langs.Length) {
+				BabelStone.set_current_language((BabelLanguage) 0);
+			} else {
+				int next_lang_int = cur_lang_int + 1;
+				BabelStone.set_current_language((BabelLanguage) next_lang_int);
+			}
+		}
+
+	}
 
 	public void attempt_to_interact(FPSCurrentRotation cur_rotation) {
 		var interactable = check_for_interactions(cur_rotation);
@@ -20,7 +41,7 @@ public class PlayerInteractor : Interactor {
 			text_mesh.text = get_interaction_text(interactable);
 		}
 
-		if (!Input.GetKey(KeyCode.E)) {
+		if (!Input.GetKeyDown(interaction_key_str)) {
 			return;
 		}
 		interact(interactable);
@@ -34,6 +55,8 @@ public class PlayerInteractor : Interactor {
 	}
 
 	private string get_interaction_text(Interactable interactable) {
-		return "Press \"E\" to " + interactable.get_interaction_text();
+		string base_text = babel_base_interaction.current_translation();
+		base_text = base_text.Replace("{{INTERACTION_KEY}}", $"\"{interaction_key_str.ToUpper()}\"");
+		return base_text + interactable.get_interaction_text();
 	}
 }

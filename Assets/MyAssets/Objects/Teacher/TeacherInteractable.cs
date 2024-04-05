@@ -16,14 +16,15 @@ public class TeacherInteractable : Interactable {
 	private ClassData data;
 
 	void calculate_time_till_next_point(float base_offset) {
-		float random_offset = 1 + Random.Range(-1f, 10f);
+		float random_offset = 1f + Random.Range(-1f, 10f);
 		float seconds = base_time_between_points + base_offset + random_offset;
 		target_points_time = seconds;
-		Debug.Log("Wait time set to " + target_points_time + "s");
+		Debug.Log($"Wait time set to {target_points_time}s");
 	}
 
 	public void load_class_data() {
 		data = manager.minigame.data;
+		calculate_time_till_next_point(0f);
 	}
 
 	private void Update() {
@@ -36,17 +37,18 @@ public class TeacherInteractable : Interactable {
 		if (between_points_timer > target_points_time) {
 			between_points_timer -= target_points_time;
 			if (minigame.is_category_done) {
-				Debug.Log("Class is dismissed");
+				Debug.Log("Class dismissed");
 				is_class_dismissed = true;
 				return;
 			}
 			minigame.increase_class_point();
 			calculate_time_till_next_point(1f);
+			can_request_more_time = true;
 		}
 	}
 
 	public override bool is_active() {
-		return !is_class_dismissed && can_request_more_time && !manager.minigame.is_category_done;
+		return !is_class_dismissed && can_request_more_time;
 	}
 	public override void do_interaction(Interactor interactor) {
 		can_request_more_time = false;
@@ -59,7 +61,7 @@ public class TeacherInteractable : Interactable {
 		between_points_timer += extra_time;
 	}
 	public override bool can_interact(Interactor interactor) {
-		var player_obj = interactor.gameObject.GetComponent<PlayerObject>();
+		var player_obj = interactor.GetComponent<PlayerObject>();
 		return player_obj != null;
 	}
 }
