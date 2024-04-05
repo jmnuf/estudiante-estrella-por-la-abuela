@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ClassManager))]
 public class ClassMiniGamePromptManager : MonoBehaviour {
 	[SerializeField]
 	private UITextPanel text_prompt_panel;
@@ -25,6 +26,7 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 		}
 		get => _class_data;
 	}
+	public ClassManager manager { get; private set; }
 	private CategoryPointsTracker copy_prompts_tracker;
 	private CategoryPointsTracker question_prompts_tracker;
 
@@ -34,7 +36,7 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 	private UserTypingToTextTracker user_typing;
 
 	private int class_point_index = 0;
-	private int active_class_point_index = 0;
+	private int active_class_point_index = -1;
 	public int completed_class_points { get; private set; }
 
 	public bool is_category_done {
@@ -47,6 +49,10 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 			}
 			return true;
 		}
+	}
+
+	private void Awake() {
+		manager = GetComponent<ClassManager>();
 	}
 
 	public delegate void EventFinishedPoint(int point_index, bool finished_correctly);
@@ -133,6 +139,7 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 	}
 
 	public void hide_panels() {
+		capturing_key_inputs = false;
 		text_prompt_panel.hide();
 		question_prompt_panel.hide();
 	}
@@ -143,7 +150,7 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 			return;
 		}
 		active_class_point_index = class_point_index;
-		var active_point = class_points[class_points.Count - 1];
+		var active_point = class_points[active_class_point_index];
 		active_point.match(
 			_ => {
 				text_prompt_panel.show();
@@ -153,6 +160,22 @@ public class ClassMiniGamePromptManager : MonoBehaviour {
 				question_prompt_panel.show();
 				capturing_key_inputs = false;
 			}
+		);
+	}
+
+	public float interrupt_current_prompt() {
+		hide_panels();
+		if (!capturing_key_inputs) {
+			return 0f;
+		}
+		
+		var active_point = class_points[active_class_point_index];
+		return active_point.match(
+			_ => {
+				finished_point?.Invoke(active_class_point_index, false);
+				return user_typing.user_progress();
+			},
+			_ => 0f
 		);
 	}
 

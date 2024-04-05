@@ -21,7 +21,7 @@ public class TestNotebook : Interactable {
 		return player_obj != null;
 	}
 
-	public override string get_interaction_text() {
+	new public string get_interaction_text() {
 		return "take notes";
 	}
 }

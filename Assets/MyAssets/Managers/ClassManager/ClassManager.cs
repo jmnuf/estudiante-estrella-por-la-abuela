@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ClassesGauntletFinished: UnityEngine.Events.UnityEvent<(ClassData, int)[]> { }
+public class ClassesGauntletFinished: UnityEngine.Events.UnityEvent<(ClassData, int, float)[]> {
+	public delegate void GauntletFinishedFn((ClassData, int, float)[] values);
+}
 [System.Serializable]
-public class ClassCategoryFinished: UnityEngine.Events.UnityEvent<ClassData, int> { }
+public class ClassCategoryFinished: UnityEngine.Events.UnityEvent<ClassData, int, float> {
+	public delegate void CategoryFinisihedFn(ClassData data, int finished_points, float progress);
+}
 
 [RequireComponent(typeof(ClassMiniGamePromptManager))]
 public class ClassManager : MonoBehaviour {
-	public TestTeacher teacher;
+	public static ClassManager instance { get; private set; }
+	public TeacherInteractable teacher;
 	public TestNotebook notebook;
 	public PlayerObject player;
 
@@ -18,10 +23,13 @@ public class ClassManager : MonoBehaviour {
 	[SerializeField]
 	private ClassCategoryFinished category_finished;
 
-	public ClassMiniGamePromptManager minigame_prompt_manager { get; private set; }
+	public event ClassCategoryFinished.CategoryFinisihedFn on_category_finished;
+	public event ClassesGauntletFinished.GauntletFinishedFn on_gauntlet_finished;
+
+	public ClassMiniGamePromptManager minigame { get; private set; }
 	public ClassData[] classes;
 	private int active_class_index = 0;
-	private List<(ClassData, int)> completed_classes = new List<(ClassData, int)>();
+	private List<(ClassData, int, float)> completed_classes = new List<(ClassData, int, float)>();
 
 	public Option<ClassData> current_class() {
 		int classes_count = classes.Length;
@@ -34,14 +42,24 @@ public class ClassManager : MonoBehaviour {
 	}
 
 	private void Awake() {
-		minigame_prompt_manager = GetComponent<ClassMiniGamePromptManager>();
-		minigame_prompt_manager.finished_point += on_finished_point;
-		minigame_prompt_manager.hide_panels();
+		if (instance != null) {
+			if (instance.gameObject != this.gameObject) {
+				Destroy(instance.gameObject);
+			} else {
+				Destroy(instance);
+			}
+			instance = null;
+		}
+		instance = this;
+
+		minigame = GetComponent<ClassMiniGamePromptManager>();
+		minigame.finished_point += on_finished_point;
+		minigame.hide_panels();
 	}
 
 	private void Start() {
 		current_class().match(
-			data => minigame_prompt_manager.data = data,
+			data => minigame.data = data,
 			() => {
 				Debug.Log("No initial class data set");
 			}
@@ -49,19 +67,19 @@ public class ClassManager : MonoBehaviour {
 	}
 
 	private void on_finished_point(int point_index, bool completed_correctly) {
-		minigame_prompt_manager.hide_panels();
+		minigame.hide_panels();
 		bool has_class_data = current_class().is_some();
 		if (!has_class_data) {
 			return;
 		}
 		var class_data = current_class().unwrap();
 		if (!completed_correctly) {
-			if (minigame_prompt_manager.is_category_done) {
+			if (minigame.is_category_done) {
 				level_completed();
 			}
 			return;
 		}
-		if (!minigame_prompt_manager.is_category_done) {
+		if (!minigame.is_category_done) {
 			return;
 		}
 		level_completed();
@@ -69,11 +87,14 @@ public class ClassManager : MonoBehaviour {
 
 	private void level_completed() {
 		var class_data = current_class().unwrap();
-		int completed_points = minigame_prompt_manager.completed_class_points;
-		completed_classes.Add( (class_data, completed_points) );
+		int completed_points = minigame.completed_class_points;
+		float prompt_progress = minigame.interrupt_current_prompt();
+		float progress = ((float) completed_points) + prompt_progress;
+		completed_classes.Add( (class_data, completed_points, progress) );
 		active_class_index += 1;
 		Debug.Log("A class has been completed, save progress");
-		category_finished?.Invoke(class_data, completed_points);
+		category_finished?.Invoke(class_data, completed_points, progress);
+		on_category_finished?.Invoke(class_data, completed_points, progress);
 		if (active_class_index < classes.Length) {
 			return;
 		}
@@ -83,5 +104,6 @@ public class ClassManager : MonoBehaviour {
 	private void classes_completed() {
 		Debug.Log($"Classes Gauntlet completed, finished {completed_classes.Count} classes");
 		gauntlet_finished?.Invoke(completed_classes.ToArray());
+		on_gauntlet_finished?.Invoke(completed_classes.ToArray());
 	}
 }
