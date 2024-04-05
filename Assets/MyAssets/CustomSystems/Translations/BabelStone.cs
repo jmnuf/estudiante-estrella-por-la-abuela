@@ -56,4 +56,17 @@ public class BabelStone : MonoBehaviour {
 		}
 		return default_language;
 	}
+
+	public static string[] get_language_names() {
+		BabelLanguage[] values = (BabelLanguage[]) System.Enum.GetValues(typeof(BabelLanguage));
+		var list = new List<string>();
+		foreach(var lang in values) {
+			string name = lang switch {
+				BabelLanguage.Spanish => "Español",
+				_ => System.Enum.GetName(typeof(BabelLanguage), lang),
+			};
+			list.Add(name);
+		}
+		return list.ToArray();
+	}
 }

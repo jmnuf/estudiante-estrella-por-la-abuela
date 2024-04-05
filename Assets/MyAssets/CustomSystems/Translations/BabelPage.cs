@@ -23,6 +23,7 @@ public class BabelPage : ScriptableObject {
 		var current_language = BabelStone.get_current_language();
 		return translations[current_language];
 	}
+
 }
 
 [System.Serializable]
