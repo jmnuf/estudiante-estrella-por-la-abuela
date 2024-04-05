@@ -65,6 +65,10 @@ sysinfo.txt
 *.unitypackage
 *.app
 
+# Ignore back-up files
+*~
+~*
+
 # Crashlytics generated file
 crashlytics-build.properties
 
