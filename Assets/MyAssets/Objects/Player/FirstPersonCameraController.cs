@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FirstPersonCameraController : MonoBehaviour {
-	private static FirstPersonCameraController instance;
+	public static FirstPersonCameraController instance { get; private set; }
 
 	private Vector2 rotation;
 
@@ -24,7 +24,7 @@ public class FirstPersonCameraController : MonoBehaviour {
 	const string xAxis = "Mouse X";
 	const string yAxis = "Mouse Y";
 
-	void Awake() {
+	private void Awake() {
 		instance = this;
 		Cursor.lockState = CursorLockMode.Locked;
 	}
@@ -42,7 +42,7 @@ public class FirstPersonCameraController : MonoBehaviour {
 		}
 	}
 
-	void toggle_lock() {
+	public void toggle_lock() {
 		if (Cursor.lockState == CursorLockMode.None) {
 			Cursor.lockState = CursorLockMode.Locked;
 		} else {
@@ -68,19 +68,15 @@ public class FirstPersonCameraController : MonoBehaviour {
 		return cur_rot;
 	}
 
-	static FirstPersonCameraController get_instance() {
-		return instance;
-	}
-
-	static void lock_camera() {
+	public static void lock_camera() {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	static void unlock_camera() {
+	public static void unlock_camera() {
 		Cursor.lockState = CursorLockMode.None;
 	}
 
-	static FPSCurrentRotation calculate_current_rotation(Vector2 rotation, Vector2 axes_movement, float mouse_sensitivity, Vector2 rot_limit) {
+	private static FPSCurrentRotation calculate_current_rotation(Vector2 rotation, Vector2 axes_movement, float mouse_sensitivity, Vector2 rot_limit) {
 		float new_x_rotation = Mathf.Clamp(rotation.x + axes_movement.x * mouse_sensitivity, -rot_limit.x, rot_limit.x);
 		float new_y_rotation = Mathf.Clamp(rotation.y + axes_movement.y * mouse_sensitivity, -rot_limit.y, rot_limit.y);
 

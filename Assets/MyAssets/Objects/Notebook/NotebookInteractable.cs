@@ -9,7 +9,11 @@ public class NotebookInteractable : Interactable {
 	public event NotebookInteractionEvent on_notebook_interaction;
 
 	public override bool is_active() {
-		return can_do_interaction;
+		if (!can_do_interaction) {
+			return false;
+		}
+		bool is_playing_minigame = ClassManager.instance.minigame.is_playing_minigame;
+		return ! is_playing_minigame;
 	}
 
 	public override void do_interaction(Interactor interactor) {

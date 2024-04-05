@@ -53,26 +53,55 @@ public class ClassManager : MonoBehaviour {
 		instance = this;
 
 		minigame = GetComponent<ClassMiniGamePromptManager>();
+		// Connect Listeners
 		minigame.finished_point += on_finished_point;
-		minigame.hide_panels();
+		minigame.on_new_point_added += point => {
+			if (!minigame.is_playing_minigame) {
+				notebook.can_do_interaction = true;
+			}
+		};
+		minigame.hide_game_panels();
+
+		notebook.on_notebook_interaction += () => {
+			FirstPersonCameraController.unlock_camera();
+			notebook.can_do_interaction = false;
+			minigame.show_active_point_panel();
+		};
+
+		teacher.on_point_timer_over += () => {
+			Debug.Log($"Teacher's timer ended: {minigame.active_class_point_index} / {minigame.class_point_index} / {minigame.class_points_count}");
+			minigame.increase_class_point();
+			if (minigame.is_category_done) {
+				teacher.dismiss_class();
+				level_completed();
+				return;
+			}
+			teacher.start_timer_for_next_point();
+		};
 	}
 
 	private void Start() {
 		current_class().match(
-			data => minigame.data = data,
+			data => {
+				minigame.data = data;
+				minigame.increase_class_point();
+				teacher.enabled = true;
+			},
 			() => {
+				teacher.enabled = false;
 				Debug.Log("No initial class data set");
 			}
 		);
 	}
 
 	private void on_finished_point(int point_index, bool completed_correctly) {
-		minigame.hide_panels();
+		minigame.hide_game_panels();
+		FirstPersonCameraController.lock_camera();
 		bool has_class_data = current_class().is_some();
 		if (!has_class_data) {
 			return;
 		}
-		var class_data = current_class().unwrap();
+		ClassData class_data = current_class().unwrap();
 		if (!completed_correctly) {
 			if (minigame.is_category_done) {
 				level_completed();
@@ -90,15 +119,24 @@ public class ClassManager : MonoBehaviour {
 		int completed_points = minigame.completed_class_points;
 		float prompt_progress = minigame.interrupt_current_prompt();
 		float progress = ((float) completed_points) + prompt_progress;
+		completed_points = (int) progress;
 		completed_classes.Add( (class_data, completed_points, progress) );
-		active_class_index += 1;
+		minigame.hide_game_panels();
+		StartCoroutine(coroutine_level_completed(class_data, completed_points, progress));
+	}
+
+	private IEnumerator coroutine_level_completed(ClassData class_data, int completed_points, float progress) {
 		Debug.Log("A class has been completed, save progress");
+		FirstPersonCameraController.unlock_camera();
 		category_finished?.Invoke(class_data, completed_points, progress);
 		on_category_finished?.Invoke(class_data, completed_points, progress);
-		if (active_class_index < classes.Length) {
-			return;
+		yield return minigame.show_class_results(progress);
+		yield return new WaitForSecondsRealtime(5);
+		minigame.hide_results_panel();
+		active_class_index += 1;
+		if (active_class_index >= classes.Length) {
+			classes_completed();
 		}
-		classes_completed();
 	}
 
 	private void classes_completed() {

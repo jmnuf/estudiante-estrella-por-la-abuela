@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe74da08d2b41844ac30c8483355d59, type: 3}
+  m_Name: AncientPhilosophersAre
+  m_EditorClassIdentifier: 
+  page_pieces:
+  - language: 1
+    content: 'Ancient philosophers are considered the foundation of Western philosophy.
+
+      The
+      4 most known figures are Socrates, Plato, Aristotle, and Confucius.'
+  - language: 0
+    content: "Los fil\xF3sofos antiguos son considerados la fundaci\xF3n de la filosof\xEDa
+      occidental.\nLas 4 figuras m\xE1s conocidas son S\xF3crates, Plato, Aristotle,
+      y Confucio"

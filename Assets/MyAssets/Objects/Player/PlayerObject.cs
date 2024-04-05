@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerObject : MonoBehaviour {
-	private PlayerInteractor interactor;
-	private FirstPersonCameraController camera_controller;
+	public PlayerInteractor interactor { get; private set; }
+	public FirstPersonCameraController camera_controller { get; private set; }
 
 	void Awake() {
 		interactor = GetComponent<PlayerInteractor>();
@@ -12,9 +12,6 @@ public class PlayerObject : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		// FPSCurrentRotation cur_rotation = camera_controller.get_current_rotation();
-		// camera_controller.move_objects(cur_rotation);
-		// interactor.attempt_to_interact(cur_rotation);
 		interactor.attempt_to_interact(null);
 	}
 

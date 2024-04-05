@@ -13,6 +13,7 @@ public class PlayerInteractor : Interactor {
 
 	// For DEBUG usage
 	// Comment out for build
+	/*
 	private void Update() {
 		if (Input.GetKeyDown(KeyCode.L)) {
 			BabelLanguage cur_lang = BabelStone.get_current_language();
@@ -27,6 +28,7 @@ public class PlayerInteractor : Interactor {
 		}
 
 	}
+	*/
 
 	public void attempt_to_interact(FPSCurrentRotation cur_rotation) {
 		var interactable = check_for_interactions(cur_rotation);

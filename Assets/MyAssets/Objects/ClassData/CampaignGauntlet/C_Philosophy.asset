@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: C_Philosophy
   m_EditorClassIdentifier: 
   category: 0
-  text_prompts_pages: []
+  text_prompts_pages:
+  - {fileID: 11400000, guid: c9a0a30ec4ab08d42a03769a31dab4dc, type: 2}
+  - {fileID: 11400000, guid: 50564b22b3665ca40bd710ae1fc7ba0d, type: 2}
   question_prompts: []
-  level_points: 0
+  level_points: 2
   points_till_questions_appear: 0

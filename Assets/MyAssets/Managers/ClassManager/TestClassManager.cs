@@ -261,6 +261,7 @@ public class TestClassManager : MonoBehaviour {
 		update_prompt_text_mesh();
 	}
 
+	// Code from: https://forum.unity.com/threads/fixed-change-color-of-individual-characters-in-textmeshpro-text-ui.1278845/#post-8884554
 	void update_prompt_text_mesh() {
 		for (int i = 0; i < prompt_text_mesh.textInfo.characterCount; ++i) {
 			// if the character is a space, the vertexIndex will be 0, which is the same as the first character. If you don't leave here, you'll keep modifying the first character's vertices, I believe this is a bug in the text mesh pro code

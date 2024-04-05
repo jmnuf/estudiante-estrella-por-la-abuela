@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe74da08d2b41844ac30c8483355d59, type: 3}
+  m_Name: SocratesWas
+  m_EditorClassIdentifier: 
+  page_pieces:
+  - language: 1
+    content: Socrates was a Greek philosopher who is credited with founding Western
+      philosophy. He believed that the pursuit of knowledge was the key to a good
+      life. He is famous for his method of questioning, which is now known as the
+      Socratic method.
+  - language: 0
+    content: "S\xF3crates fue un fil\xF3sofo griego al que se le atribuye la fundaci\xF3n
+      de la filosof\xEDa occidental. Cre\xEDa que la b\xFAsqueda del conocimiento
+      era la clave para una buena vida. Socrates es famoso por su m\xE9todo de cuestionamiento,
+      que ahora se conoce como el m\xE9todo socr\xE1tico."
