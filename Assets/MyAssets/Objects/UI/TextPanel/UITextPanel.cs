@@ -35,8 +35,12 @@ public class UITextPanel : MonoBehaviour {
 		}
 	}
 
-	public UITextPanel() : base() {
+	private void Awake() {
 		BabelStone.on_current_language_changed += on_babel_current_language_changed;
+	}
+
+	private void OnDestroy() {
+		BabelStone.on_current_language_changed -= on_babel_current_language_changed;
 	}
 
 	public delegate Color32 MapTextCharacterInfoToColor(int index, TMP_CharacterInfo characterInfo);
