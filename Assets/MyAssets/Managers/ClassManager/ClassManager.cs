@@ -63,7 +63,7 @@ public class ClassManager : MonoBehaviour {
 		minigame.hide_game_panels();
 
 		notebook.on_notebook_interaction += () => {
-			FirstPersonCameraController.unlock_camera();
+			FirstPersonCameraController.instance.unlock_camera();
 			notebook.can_do_interaction = false;
 			minigame.show_active_point_panel();
 		};
@@ -96,7 +96,7 @@ public class ClassManager : MonoBehaviour {
 
 	private void on_finished_point(int point_index, bool completed_correctly) {
 		minigame.hide_game_panels();
-		FirstPersonCameraController.lock_camera();
+		FirstPersonCameraController.instance.lock_camera();
 		bool has_class_data = current_class().is_some();
 		if (!has_class_data) {
 			return;
@@ -127,7 +127,7 @@ public class ClassManager : MonoBehaviour {
 
 	private IEnumerator coroutine_level_completed(ClassData class_data, int completed_points, float progress) {
 		Debug.Log("A class has been completed, save progress");
-		FirstPersonCameraController.unlock_camera();
+		FirstPersonCameraController.instance.unlock_camera();
 		category_finished?.Invoke(class_data, completed_points, progress);
 		on_category_finished?.Invoke(class_data, completed_points, progress);
 		yield return minigame.show_class_results(progress);

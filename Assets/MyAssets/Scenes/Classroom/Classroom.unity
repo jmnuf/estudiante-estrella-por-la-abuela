@@ -1414,6 +1414,7 @@ MonoBehaviour:
       m_Calls: []
   classes:
   - {fileID: 11400000, guid: 5005ee6f5f9d88344b0aab2b21387279, type: 2}
+  - {fileID: 11400000, guid: ce59c81dbbb60c942a88a7ad02c32a92, type: 2}
 --- !u!224 &1827097686
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1443,6 +1444,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1027015948}
     m_Modifications:
+    - target: {fileID: 246414273, guid: 5aa38b659197ddb41a26f00848cf572b, type: 3}
+      propertyPath: aim_pointer
+      value: 
+      objectReference: {fileID: 498464625}
     - target: {fileID: 246414273, guid: 5aa38b659197ddb41a26f00848cf572b, type: 3}
       propertyPath: x_rotation_limit
       value: 35

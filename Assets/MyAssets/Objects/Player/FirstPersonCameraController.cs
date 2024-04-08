@@ -9,6 +9,7 @@ public class FirstPersonCameraController : MonoBehaviour {
 
 	public GameObject object_to_apply_y_rotation;
 	public GameObject object_to_apply_x_rotation;
+	public GameObject aim_pointer;
 	public Transform reference_point;
 
 	[SerializeField]
@@ -42,11 +43,21 @@ public class FirstPersonCameraController : MonoBehaviour {
 		}
 	}
 
+	public void lock_camera() {
+		lock_cursor();
+		aim_pointer?.SetActive(false);
+	}
+
+	public void unlock_camera() {
+		unlock_cursor();
+		aim_pointer?.SetActive(true);
+	}
+
 	public void toggle_lock() {
 		if (Cursor.lockState == CursorLockMode.None) {
-			Cursor.lockState = CursorLockMode.Locked;
+			lock_camera();
 		} else {
-			Cursor.lockState = CursorLockMode.None;
+			unlock_camera();
 		}
 	}
 
@@ -68,11 +79,11 @@ public class FirstPersonCameraController : MonoBehaviour {
 		return cur_rot;
 	}
 
-	public static void lock_camera() {
+	public static void lock_cursor() {
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	public static void unlock_camera() {
+	public static void unlock_cursor() {
 		Cursor.lockState = CursorLockMode.None;
 	}
 
