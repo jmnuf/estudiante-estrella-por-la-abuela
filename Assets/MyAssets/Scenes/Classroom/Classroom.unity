@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 1.8
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 10}
-  m_SizeDelta: {x: -40, y: 50}
+  m_AnchoredPosition: {x: 0, y: 25}
+  m_SizeDelta: {x: -40, y: 200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &37735795
 MonoBehaviour:
@@ -208,12 +208,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 84
   m_fontSizeBase: 18
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 84
   m_fontStyle: 2
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1103,6 +1103,54 @@ PrefabInstance:
     - target: {fileID: 4116593374661334555, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
       propertyPath: m_Name
       value: Classroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375322510245, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Intensity
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375322510245, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375497408145, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Intensity
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375497408145, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375620794642, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Intensity
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375620794642, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375781826952, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Intensity
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375781826952, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375880162147, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Intensity
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593375880162147, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.136
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593376266123467, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Intensity
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4116593376266123467, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}
+      propertyPath: m_Shadows.m_Strength
+      value: 0.136
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6bf92d9562896f49ad15e9d237dce91, type: 3}

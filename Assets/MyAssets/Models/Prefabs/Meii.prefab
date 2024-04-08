@@ -78,6 +78,10 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.20156541
       objectReference: {fileID: 0}
+    - target: {fileID: -5694092435888646316, guid: 04d5cd8618e66ea4c96f4a2cc999395b, type: 3}
+      propertyPath: m_Materials.Array.data[9]
+      value: 
+      objectReference: {fileID: 2100000, guid: 658eb5d0d059963498c71ee8d9ed2673, type: 2}
     - target: {fileID: -1728013695380148634, guid: 04d5cd8618e66ea4c96f4a2cc999395b, type: 3}
       propertyPath: m_Name
       value: MeiiVrm

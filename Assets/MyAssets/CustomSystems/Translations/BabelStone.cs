@@ -43,7 +43,7 @@ public class BabelStone : MonoBehaviour {
 		foreach(var mr in stones) {
 			mr.load_language_translation();
 		}
-		on_current_language_changed();
+		on_current_language_changed?.Invoke();
 	}
 
 	public static BabelLanguage get_language_from_system(BabelLanguage default_language) {
