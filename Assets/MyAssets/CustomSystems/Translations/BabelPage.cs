@@ -6,22 +6,29 @@ using UnityEngine;
 public class BabelPage : ScriptableObject {
 	[SerializeField]
 	private BabelPagePiece[] page_pieces;
-	public BabelPageContent translations = new BabelPageContent();
+	private BabelPageContent translations = new BabelPageContent();
+	private bool has_loaded_translations = false;
 
 	private void OnValidate() {
 		translations = new BabelPageContent();
 		foreach (var piece in page_pieces) {
 			translations.TryAdd(piece.language, piece.content);
 		}
+		has_loaded_translations = true;
 	}
 
 	public string this[BabelLanguage language] {
-		get { return translations[language]; }
+		get {
+			if (!has_loaded_translations) {
+				OnValidate();
+			}
+			return translations[language];
+		}
 	}
 
 	public string current_translation() {
 		var current_language = BabelStone.get_current_language();
-		return translations[current_language];
+		return this[current_language];
 	}
 
 }

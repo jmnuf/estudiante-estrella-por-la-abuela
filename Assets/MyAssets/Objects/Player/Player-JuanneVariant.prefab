@@ -254,7 +254,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 990715988086942886, guid: 1eff3ba1e7d5a834f9c6c7fa5505030c, type: 3}
       propertyPath: m_Name
-      value: Juanne
+      value: Player-JuanneVariant
       objectReference: {fileID: 0}
     - target: {fileID: 990715988086942937, guid: 1eff3ba1e7d5a834f9c6c7fa5505030c, type: 3}
       propertyPath: m_RootOrder
@@ -385,18 +385,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &246414275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099721379475990197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b82cb15a1f6f32c44a9cf80ff773a1de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &246414273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,6 +418,19 @@ MonoBehaviour:
   ray_ref_object: {fileID: 159100205}
   ray_distance: 10
   interaction_text_label: {fileID: 0}
+  babel_base_interaction: {fileID: 11400000, guid: bc756f34bb5ea1a4caf9f9de87111161, type: 2}
+--- !u!114 &246414275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099721379475990197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82cb15a1f6f32c44a9cf80ff773a1de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7099721379475990218 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 990715988086942937, guid: 1eff3ba1e7d5a834f9c6c7fa5505030c, type: 3}

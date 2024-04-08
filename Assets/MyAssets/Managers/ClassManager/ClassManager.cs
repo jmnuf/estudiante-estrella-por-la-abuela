@@ -143,5 +143,6 @@ public class ClassManager : MonoBehaviour {
 		Debug.Log($"Classes Gauntlet completed, finished {completed_classes.Count} classes");
 		gauntlet_finished?.Invoke(completed_classes.ToArray());
 		on_gauntlet_finished?.Invoke(completed_classes.ToArray());
+		GameManager.instance.load_main_menu();
 	}
 }
